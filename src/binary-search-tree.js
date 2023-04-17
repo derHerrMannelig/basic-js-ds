@@ -72,6 +72,42 @@ class TreeNode {
       }
     }
   }
+
+  remove(data) {
+    if (data === this.data) {
+      if (this.left == undefined && this.right == undefined) {
+        return undefined;
+      }
+      if (this.left == undefined) {
+        return this.right;
+      }
+      if (this.right == undefined) {
+        return this.left;
+      }
+      let minRight = this.right.min();
+      this.data = minRight.data;
+      this.right = this.right.remove(minRight.data);
+    } else if (data < this.data) {
+      this.left = this.left && this.left.remove(data);
+    } else {
+      this.right = this.right && this.right.remove(data);
+    }
+    return this;
+  }
+
+  min() {
+    if (this.left == undefined) {
+      return this;
+    }
+    return this.left.min();
+  }
+
+  max() {
+    if (this.right == undefined) {
+      return this;
+    }
+    return this.right.max();
+  }
 }
 
 class BinarySearchTree {
@@ -112,19 +148,36 @@ class BinarySearchTree {
     }
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    if (this.rootNode) {
+      this.rootNode = this.rootNode.remove(data);
+    }
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (this.rootNode) {
+      let minNode = this.rootNode.min();
+      if (minNode) {
+        return minNode.data;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (this.rootNode) {
+      let maxNode = this.rootNode.max();
+      if (maxNode) {
+        return maxNode.data;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 }
 
